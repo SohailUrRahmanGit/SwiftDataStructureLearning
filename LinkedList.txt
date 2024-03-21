@@ -44,6 +44,30 @@ public struct LinkedList<Value> {
       tail!.next = Node(value: value)
       tail = tail!.next
    }
+   
+   public mutating func node(at index: Int) -> Node<Value>?  {
+       var currentNode = head
+       var currentIndex = 0
+       
+       while(currentNode != nil && currentIndex < index ) {
+           currentIndex += 1
+           currentNode = currentNode!.next
+       }
+     return currentNode
+   }
+   
+   @discardableResult
+   public mutating func insert(after : Node<Value>, value: Value) -> Node<Value> {
+    guard tail !== after else {
+        append(value: value)
+        return tail!
+    }
+      after.next = Node(value: value, next: after.next)
+        return after.next!
+   }
+       
+   
+   
 }
 extension LinkedList: CustomStringConvertible {
     public var description: String {
@@ -60,6 +84,16 @@ extension LinkedList: CustomStringConvertible {
  firstLinkedList.push(value: 3)
  firstLinkedList.push(value: 4)
  firstLinkedList.append(value: 80)
+ firstLinkedList.append(value: 0)
+ firstLinkedList.append(value: 10)
+ firstLinkedList.append(value: 6)
+ 
 
  print(firstLinkedList)
- print(firstLinkedList.tail)
+
+  var someExistingNode = firstLinkedList.node(at: 3)
+   firstLinkedList.insert(after: someExistingNode!, value: 786)
+
+print("afterInserting")
+ print(firstLinkedList)
+print("afterInserting")
